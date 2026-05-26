@@ -1,0 +1,8 @@
+# exclude code-editor setting files and directories.
+.vscode/
+.vs/
+.zed/
+.idea/
+
+.config.json
+.env
