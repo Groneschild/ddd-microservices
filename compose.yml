@@ -1,0 +1,18 @@
+version: '3.9'
+
+name: ddd-microservice-2026
+
+services:
+  fin:
+    build: ./fin
+    environment:
+      - DATABASE_URL: ${DATABASE_URL} # comes from .env
+    env_file:
+      - "./fin/.env"
+
+  ecd:
+    build: ./ecd
+    environment:
+      - DATABASE_URL: ${DATABASE_URL} # comes from .env
+    env_file:
+      - "./ecd/.env"
