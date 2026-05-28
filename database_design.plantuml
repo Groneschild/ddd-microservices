@@ -1,0 +1,90 @@
+@startuml
+
+package "electronic client dossier (ECD)" {
+    entity client {
+        id uuid <<PK>>
+        ----
+        name string
+        birth_date dateonly
+    }
+    
+    entity diagnosis {
+        date_noted datetime
+        description string
+    }
+    
+    entity healtcare_need {
+        id uuid <<PK>>
+        advised_healtcare_technology <<FK>>
+        
+        ----
+        description string
+        advise_reasoning string
+    }
+
+}
+
+package "healtcare technology (HCT)" {
+    entity technology_product {
+        id uuid <<PK>>
+        ----
+        name string
+        description string
+        unit_price uint
+    }
+}
+
+/'function budget aanvraag te doen
+  (clientid, productid, prijs) --> verdict
+  
+  
+
+'/
+
+package "finance system (FIN)" {
+    entity budget {
+        id uuid <<PK>>
+        client_id <<FK>>
+        ----
+        limit uint
+        used uint
+    }
+    
+    entity finance_dossier {
+        id uuid <<PK>>
+        budget_id <<FK>>
+        technology_product_id uuid <<EFK>>
+        ----
+        request_date datetime
+        verdict boolean
+    }
+
+    entity invoice {
+        id uuid <<PK>>
+        finance_dossier_id uuid <<FK>>
+        technology_product_id uuid <<EFK>>
+        ----
+        invoice_date dateonly
+        total_price uint
+    }
+}
+
+client ||--o{ diagnosis
+diagnosis ||--o{ healtcare_need
+
+healtcare_need }o..|| technology_product
+
+
+budget ||--|{ finance_dossier
+finance_dossier ||--o{ invoice
+
+
+
+
+
+
+
+
+
+
+@enduml
